@@ -41,9 +41,17 @@ class MainActivity : ComponentActivity() {
                         Spacer(modifier = Modifier.height(16.dp))
 
                         Button(onClick = {
-                            startActivity(Intent(this@MainActivity, SecondActivity::class.java))
+                            startActivity(Intent(this@MainActivity, MemoryLeakAndJankTestActivity::class.java))
                         }) {
-                            Text("Navigate to SecondActivity")
+                            Text("Navigate to MemoryLeakAndJankTestActivity")
+                        }
+
+                        Spacer(modifier = Modifier.height(16.dp))
+
+                        Button(onClick = {
+                            startActivity(Intent(this@MainActivity, RecompositionTestActivity::class.java))
+                        }) {
+                            Text("Navigate to RecompositionTestActivity")
                         }
 
                         Spacer(modifier = Modifier.height(16.dp))

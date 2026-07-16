@@ -19,7 +19,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import com.cbhard.pulseapp.ui.theme.PulseAppTheme
 
-class SecondActivity : ComponentActivity() {
+class MemoryLeakAndJankTestActivity : ComponentActivity() {
 
     // A static list that will hold onto instances of this Activity forever
     companion object {

@@ -9,9 +9,10 @@ class PulseCore private constructor(private val application: Application) {
     internal val buffer = PulseBuffer(capacity = 150)
     internal val leakAnalyzer = LeakAnalyzer(buffer)
     internal val jankMonitor = JankMonitor(buffer)
+    internal val composeMonitor = ComposeMonitor(buffer)
 
     init {
-        Log.d("[PulseCore]", "Pulse SDK initialized in background.")
+        Log.d("[PulseCore]", "Pulse SDK initialized. Telemetry systems online.")
 
         // Boot up our monitoring systems
         val lifecycleMonitor = LifecycleMonitor(buffer, leakAnalyzer, jankMonitor)

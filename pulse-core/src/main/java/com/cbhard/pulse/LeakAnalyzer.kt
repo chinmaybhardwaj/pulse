@@ -34,8 +34,10 @@ internal class LeakAnalyzer(private val buffer: PulseBuffer) {
                 )
 
                 // Record this in our AI Black Box
-                buffer.record(PulseEvent.Anomaly("MemoryLeak", "$activityName retained in memory"))
-
+                val anomaly = PulseEvent.Anomaly("MemoryLeak", "$activityName retained in memory")
+                buffer.record(anomaly)
+                // Trigger our AI payload builder
+                AiPayloadBuilder.generateReport(anomaly, buffer.extractTimeline())
                 // TODO (V2): This is where we would trigger the lightweight heap path extraction
             } else {
                 Log.v("[PulseCore]", "✅ $activityName cleanly collected.")

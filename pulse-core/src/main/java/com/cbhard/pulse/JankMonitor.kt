@@ -39,12 +39,13 @@ internal class JankMonitor(private val buffer: PulseBuffer) : Choreographer.Fram
             if (frameDuration > severeFreezeNanos) {
                 val freezeMs = TimeUnit.NANOSECONDS.toMillis(frameDuration)
                 Log.e("[PulseCore]", "🥶 SEVERE UI FREEZE: Main thread blocked for ${freezeMs}ms!")
-                buffer.record(
-                    PulseEvent.Anomaly(
-                        "UIFreeze",
-                        "Main thread blocked for ${freezeMs}ms"
-                    )
-                )
+               val anomaly = PulseEvent.Anomaly(
+                   "UIFreeze",
+                   "Main thread blocked for ${freezeMs}ms"
+               )
+                buffer.record(anomaly)
+                // Trigger our AI payload builder
+                AiPayloadBuilder.generateReport(anomaly, buffer.extractTimeline())
             } else if (frameDuration > frameBudgetNanos) {
                 // Calculate how many frames we missed
                 val droppedFrames = (frameDuration / frameBudgetNanos).toInt()
