@@ -1,4 +1,4 @@
-package com.cbhard.pulse
+package com.cbhard.pulse.model
 
 data class FixRecommendation(
     val anomalyType: String,

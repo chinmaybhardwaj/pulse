@@ -1,7 +1,12 @@
-package com.cbhard.pulse
+package com.cbhard.pulse.core
 
 import android.app.Application
 import android.util.Log
+import com.cbhard.pulse.buffer.PulseBuffer
+import com.cbhard.pulse.monitor.ComposeMonitor
+import com.cbhard.pulse.monitor.JankMonitor
+import com.cbhard.pulse.monitor.LeakAnalyzer
+import com.cbhard.pulse.monitor.LifecycleMonitor
 
 class PulseCore private constructor(private val application: Application) {
 

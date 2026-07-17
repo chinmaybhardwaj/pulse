@@ -1,10 +1,12 @@
-package com.cbhard.pulse
+package com.cbhard.pulse.monitor
 
 import android.app.Activity
 import android.app.Application
 import android.os.Bundle
 import android.os.SystemClock
 import android.util.Log
+import com.cbhard.pulse.buffer.PulseBuffer
+import com.cbhard.pulse.model.PulseEvent
 
 internal class LifecycleMonitor(
     private val buffer: PulseBuffer,

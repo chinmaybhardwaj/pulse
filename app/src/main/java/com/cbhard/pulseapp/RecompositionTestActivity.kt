@@ -16,7 +16,7 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import com.cbhard.pulse.pulseTrace
+import com.cbhard.pulse.compose.pulseTrace
 import com.cbhard.pulseapp.ui.theme.PulseAppTheme
 
 class RecompositionTestActivity : ComponentActivity() {

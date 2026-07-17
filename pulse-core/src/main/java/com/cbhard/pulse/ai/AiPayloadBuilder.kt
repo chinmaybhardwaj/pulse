@@ -1,7 +1,8 @@
-package com.cbhard.pulse
+package com.cbhard.pulse.ai
 
 import android.os.Build
 import android.util.Log
+import com.cbhard.pulse.model.PulseEvent
 import org.json.JSONArray
 import org.json.JSONObject
 

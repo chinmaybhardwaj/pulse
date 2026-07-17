@@ -1,4 +1,4 @@
-package com.cbhard.pulse
+package com.cbhard.pulse.model
 
 /**
  * A strict schema for system events. 

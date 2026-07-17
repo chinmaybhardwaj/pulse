@@ -1,9 +1,12 @@
-package com.cbhard.pulse
+package com.cbhard.pulse.monitor
 
 import android.app.Activity
 import android.os.Handler
 import android.os.HandlerThread
 import android.util.Log
+import com.cbhard.pulse.ai.AiPayloadBuilder
+import com.cbhard.pulse.buffer.PulseBuffer
+import com.cbhard.pulse.model.PulseEvent
 import java.lang.ref.WeakReference
 
 internal class LeakAnalyzer(private val buffer: PulseBuffer) {

@@ -1,5 +1,6 @@
-package com.cbhard.pulse
+package com.cbhard.pulse.ai
 
+import com.cbhard.pulse.model.FixRecommendation
 import org.json.JSONObject
 
 internal class PulseInferenceEngine {

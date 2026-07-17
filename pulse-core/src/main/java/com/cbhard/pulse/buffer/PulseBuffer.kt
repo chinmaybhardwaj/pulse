@@ -1,6 +1,7 @@
-package com.cbhard.pulse
+package com.cbhard.pulse.buffer
 
 import android.util.Log
+import com.cbhard.pulse.model.PulseEvent
 
 /**
  * A fixed-size, thread-safe circular buffer.

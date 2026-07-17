@@ -1,8 +1,9 @@
-package com.cbhard.pulse
+package com.cbhard.pulse.compose
 
 import androidx.compose.runtime.SideEffect
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.composed
+import com.cbhard.pulse.core.PulseCore
 
 /**
  * A lightweight modifier that host developers can attach to complex screens.

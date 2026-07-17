@@ -1,4 +1,4 @@
-package com.cbhard.pulse
+package com.cbhard.pulse.core
 
 import android.app.Application
 import android.content.Context
