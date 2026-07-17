@@ -26,6 +26,13 @@ android {
     buildFeatures {
         compose = true
     }
+
+    // ADD THIS: Tell Android to generate the release component for Maven
+    publishing {
+        singleVariant("release") {
+            withSourcesJar()
+        }
+    }
 }
 
 dependencies {
@@ -47,4 +54,19 @@ dependencies {
     androidTestImplementation(libs.androidx.junit)
     debugImplementation(libs.androidx.compose.ui.test.manifest)
     debugImplementation(libs.androidx.compose.ui.tooling)
+}
+
+// MUST BE AT THE VERY BOTTOM OF THE FILE, OUTSIDE ALL OTHER BLOCKS
+configure<org.gradle.api.publish.PublishingExtension> {
+    publications {
+        register<org.gradle.api.publish.maven.MavenPublication>("release") {
+            groupId = "com.github.YourUsername"
+            artifactId = "pulse-core"
+            version = "1.0.0"
+
+            afterEvaluate {
+                from(components["release"])
+            }
+        }
+    }
 }
