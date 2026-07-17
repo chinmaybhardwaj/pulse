@@ -6,7 +6,10 @@ import com.cbhard.pulse.buffer.PulseBuffer
 import com.cbhard.pulse.model.PulseEvent
 import java.util.concurrent.ConcurrentHashMap
 
-internal class ComposeMonitor(private val buffer: PulseBuffer) {
+internal class ComposeMonitor(
+    private val buffer: PulseBuffer,
+    private val aiPayloadBuilder: AiPayloadBuilder
+) {
 
     // Tracks: ComponentName -> Pair<LastResetTimestamp, RecompositionCount>
     private val recomposeCounts = ConcurrentHashMap<String, Pair<Long, Int>>()
@@ -38,7 +41,7 @@ internal class ComposeMonitor(private val buffer: PulseBuffer) {
                 buffer.record(anomaly)
                 
                 // Trigger our AI payload builder
-                AiPayloadBuilder.generateReport(anomaly, buffer.extractTimeline())
+                aiPayloadBuilder.generateReport(anomaly, buffer.extractTimeline())
             }
         } else {
             // A second has passed, reset the bucket

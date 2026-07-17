@@ -2,6 +2,7 @@ package com.cbhard.pulse.core
 
 import android.app.Application
 import android.util.Log
+import com.cbhard.pulse.ai.AiPayloadBuilder
 import com.cbhard.pulse.buffer.PulseBuffer
 import com.cbhard.pulse.monitor.ComposeMonitor
 import com.cbhard.pulse.monitor.JankMonitor
@@ -10,11 +11,13 @@ import com.cbhard.pulse.monitor.LifecycleMonitor
 
 class PulseCore private constructor(private val application: Application) {
 
-    // 1. Expose the buffer internally
+    // 1. Initialize the AI Builder with the host app's Context
+    internal val aiPayloadBuilder = AiPayloadBuilder(application)
+    // 2. Expose the buffer internally
     internal val buffer = PulseBuffer(capacity = 150)
-    internal val leakAnalyzer = LeakAnalyzer(buffer)
-    internal val jankMonitor = JankMonitor(buffer)
-    internal val composeMonitor = ComposeMonitor(buffer)
+    internal val leakAnalyzer = LeakAnalyzer(buffer, aiPayloadBuilder)
+    internal val jankMonitor = JankMonitor(buffer, aiPayloadBuilder)
+    internal val composeMonitor = ComposeMonitor(buffer, aiPayloadBuilder)
 
     init {
         Log.d("[PulseCore]", "Pulse SDK initialized. Telemetry systems online.")

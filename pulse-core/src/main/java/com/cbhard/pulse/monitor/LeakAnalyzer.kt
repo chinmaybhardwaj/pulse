@@ -9,7 +9,10 @@ import com.cbhard.pulse.buffer.PulseBuffer
 import com.cbhard.pulse.model.PulseEvent
 import java.lang.ref.WeakReference
 
-internal class LeakAnalyzer(private val buffer: PulseBuffer) {
+internal class LeakAnalyzer(
+    private val buffer: PulseBuffer,
+    private val aiPayloadBuilder: AiPayloadBuilder
+) {
 
     // A dedicated background thread so we NEVER block the host app's UI
     private val handlerThread = HandlerThread("Pulse-Leak-Analyzer").apply { start() }
@@ -40,7 +43,7 @@ internal class LeakAnalyzer(private val buffer: PulseBuffer) {
                 val anomaly = PulseEvent.Anomaly("MemoryLeak", "$activityName retained in memory")
                 buffer.record(anomaly)
                 // Trigger our AI payload builder
-                AiPayloadBuilder.generateReport(anomaly, buffer.extractTimeline())
+                aiPayloadBuilder.generateReport(anomaly, buffer.extractTimeline())
                 // TODO (V2): This is where we would trigger the lightweight heap path extraction
             } else {
                 Log.v("[PulseCore]", "✅ $activityName cleanly collected.")

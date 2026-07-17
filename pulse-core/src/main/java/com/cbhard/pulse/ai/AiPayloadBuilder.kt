@@ -1,45 +1,46 @@
 package com.cbhard.pulse.ai
 
+import android.content.Context
 import android.os.Build
 import android.util.Log
 import com.cbhard.pulse.model.PulseEvent
 import org.json.JSONArray
 import org.json.JSONObject
 
-internal object AiPayloadBuilder {
+internal class AiPayloadBuilder(context: Context) {
 
-    // Instantiate our Inference Engine
-    private val inferenceEngine = PulseInferenceEngine()
+    // 1. The engine is initialized here, using the Context to load the TFLite assets
+    private val inferenceEngine = PulseInferenceEngine(context)
 
     fun generateReport(anomaly: PulseEvent.Anomaly, timeline: List<PulseEvent>) {
         Thread {
             try {
                 val root = JSONObject()
 
-                // 1. Build Context
                 val contextObj = JSONObject().apply {
                     put("os_version", Build.VERSION.SDK_INT)
                     put("device_model", Build.MODEL)
+                    put("manufacturer", Build.MANUFACTURER)
                 }
                 root.put("environment", contextObj)
 
-                // 2. Build Trigger
                 val anomalyObj = JSONObject().apply {
                     put("type", anomaly.type)
                     put("description", anomaly.description)
+                    put("timestamp", anomaly.timestamp)
                 }
                 root.put("trigger", anomalyObj)
 
-                // 3. Build Timeline
                 val timelineArray = JSONArray()
-                timeline.forEach { timelineArray.put(JSONObject().apply { put("log", it.toString()) }) }
+                timeline.forEach { event ->
+                    timelineArray.put(JSONObject().apply { put("log", event.toString()) })
+                }
                 root.put("context_window", timelineArray)
 
-                // --- NEW: Run Inference ---
-                Log.d("[PulseCore]", "Feeding telemetry to AI Inference Engine...")
+                // 2. The builder triggers the engine's analyze method!
+                Log.d("[PulseCore]", "Feeding telemetry timeline to AI Inference Engine...")
                 val recommendation = inferenceEngine.analyze(root)
-                
-                // Output the final, actionable result to the developer
+
                 Log.e("[PulseCore] Diagnostics", "\n$recommendation")
 
             } catch (e: Exception) {

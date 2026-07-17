@@ -7,7 +7,10 @@ import com.cbhard.pulse.buffer.PulseBuffer
 import com.cbhard.pulse.model.PulseEvent
 import java.util.concurrent.TimeUnit
 
-internal class JankMonitor(private val buffer: PulseBuffer) : Choreographer.FrameCallback {
+internal class JankMonitor(
+    private val buffer: PulseBuffer,
+    private val aiPayloadBuilder: AiPayloadBuilder
+) : Choreographer.FrameCallback {
 
     private var isMonitoring = false
     private var lastFrameTimeNanos: Long = 0
@@ -48,7 +51,7 @@ internal class JankMonitor(private val buffer: PulseBuffer) : Choreographer.Fram
                )
                 buffer.record(anomaly)
                 // Trigger our AI payload builder
-                AiPayloadBuilder.generateReport(anomaly, buffer.extractTimeline())
+                aiPayloadBuilder.generateReport(anomaly, buffer.extractTimeline())
             } else if (frameDuration > frameBudgetNanos) {
                 // Calculate how many frames we missed
                 val droppedFrames = (frameDuration / frameBudgetNanos).toInt()
