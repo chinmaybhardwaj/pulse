@@ -9,6 +9,26 @@ Pulse is an Android monitoring SDK prototype that records a compact timeline of 
 
 The repository also includes a Compose sample app that intentionally creates both failures, making it useful for developing and validating the SDK.
 
+## Setup
+
+Step 1. Add the JitPack repository to your build file
+```
+dependencyResolutionManagement {
+		repositoriesMode.set(RepositoriesMode.FAIL_ON_PROJECT_REPOS)
+		repositories {
+			mavenCentral()
+			maven { url = uri("https://jitpack.io") }
+		}
+	}
+```
+
+Step 2. Add the dependency
+```
+dependencies {
+    implementation("com.github.chinmaybhardwaj:pulse:v1.0.0")
+}
+```
+
 ## Project structure
 
 | Module | Purpose |
