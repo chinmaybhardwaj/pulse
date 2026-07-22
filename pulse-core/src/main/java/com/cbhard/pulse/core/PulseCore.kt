@@ -20,14 +20,9 @@ class PulseCore private constructor(private val application: Application) {
     internal val composeMonitor = ComposeMonitor(buffer, aiPayloadBuilder)
 
     private var isShutdown = false
-
-    var lifecycleMonitor: LifecycleMonitor
+    private val lifecycleMonitor = LifecycleMonitor(buffer, leakAnalyzer, jankMonitor)
 
     init {
-        Log.d("[PulseCore]", "Pulse SDK initialized. Telemetry systems online.")
-
-        // Boot up our monitoring systems
-        lifecycleMonitor = LifecycleMonitor(buffer, leakAnalyzer, jankMonitor)
         PulseSafeguard.execute("[PulseCore] Init") {
             Log.d("[PulseCore]", "Pulse SDK initialized. Telemetry systems online.")
             application.registerActivityLifecycleCallbacks(lifecycleMonitor)

@@ -8,7 +8,7 @@ import android.util.Log
 import com.cbhard.pulse.buffer.PulseBuffer
 import com.cbhard.pulse.model.PulseEvent
 
-class LifecycleMonitor(
+internal class LifecycleMonitor(
     private val buffer: PulseBuffer,
     private val leakAnalyzer: LeakAnalyzer,
     private val jankMonitor: JankMonitor
