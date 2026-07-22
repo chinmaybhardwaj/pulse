@@ -31,7 +31,6 @@ androidx-compose-material3 = { group = "androidx.compose.material3", name = "mat
 androidx-startup-runtime = { group = "androidx.startup", name = "startup-runtime", version.ref = "startup-runtime" }
 androidx-compose-runtime = { group = "androidx.compose.runtime", name = "runtime" }
 
-play-services-tflite-java = { group = "com.google.android.gms", name = "play-services-tflite-java", version.ref = "play-services-tflite-java" }
 tensorflow-lite = { group = "org.tensorflow", name = "tensorflow-lite", version.ref = "tensorflow-lite" }
 org-json = { group = "org.json", name = "json", version.ref = "org-json" }
 
