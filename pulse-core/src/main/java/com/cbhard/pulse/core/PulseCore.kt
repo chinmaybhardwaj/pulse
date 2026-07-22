@@ -24,7 +24,10 @@ class PulseCore private constructor(private val application: Application) {
 
         // Boot up our monitoring systems
         val lifecycleMonitor = LifecycleMonitor(buffer, leakAnalyzer, jankMonitor)
-        application.registerActivityLifecycleCallbacks(lifecycleMonitor)
+        PulseSafeguard.execute("[PulseCore] Init") {
+            Log.d("[PulseCore]", "Pulse SDK initialized. Telemetry systems online.")
+            application.registerActivityLifecycleCallbacks(lifecycleMonitor)
+        }
     }
 
     companion object {
