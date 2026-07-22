@@ -19,11 +19,15 @@ class PulseCore private constructor(private val application: Application) {
     internal val jankMonitor = JankMonitor(buffer, aiPayloadBuilder)
     internal val composeMonitor = ComposeMonitor(buffer, aiPayloadBuilder)
 
+    private var isShutdown = false
+
+    var lifecycleMonitor: LifecycleMonitor
+
     init {
         Log.d("[PulseCore]", "Pulse SDK initialized. Telemetry systems online.")
 
         // Boot up our monitoring systems
-        val lifecycleMonitor = LifecycleMonitor(buffer, leakAnalyzer, jankMonitor)
+        lifecycleMonitor = LifecycleMonitor(buffer, leakAnalyzer, jankMonitor)
         PulseSafeguard.execute("[PulseCore] Init") {
             Log.d("[PulseCore]", "Pulse SDK initialized. Telemetry systems online.")
             application.registerActivityLifecycleCallbacks(lifecycleMonitor)
@@ -48,6 +52,22 @@ class PulseCore private constructor(private val application: Application) {
          */
         fun getInstance(): PulseCore {
             return instance ?: throw IllegalStateException("PulseCore is not initialized")
+        }
+    }
+
+    /**
+     * Dismantles all system hooks and clears memory.
+     */
+    fun shutdown() {
+        if (isShutdown) return
+        isShutdown = true
+
+        PulseSafeguard.execute("[PulseCore] Shutdown") {
+            // 1. Unregister lifecycle callbacks so we stop tracking Activities
+            application.unregisterActivityLifecycleCallbacks(lifecycleMonitor)
+            // 2. Clear the time-traveling buffer to free up heap memory
+            buffer.clear()
+            Log.d("[PulseCore]", "Pulse SDK successfully dismantled. Zero overhead restored.")
         }
     }
 }

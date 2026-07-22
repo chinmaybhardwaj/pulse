@@ -113,3 +113,16 @@ FixRecommendation(
 Pulse is designed for strict GDPR & CCPA compliance:
 * **100% Offline:** Telemetry and AI inference occur locally. Pulse makes zero network calls and has no backend dependency.
 * **PII Sanitization:** A built-in Regex interceptor actively strips emails, auth tokens, credit cards, and password variables from stack traces and Compose nodes before they are processed or logged.
+* **Provide Automatic Initialization Opt-Out:** Call PulseCore.initialize(application) manually
+```
+<-- Disable automatic initialization in AndroidManifest.xml -->
+<provider
+    android:name="androidx.startup.InitializationProvider"
+    android:authorities="${applicationId}.androidx-startup"
+    android:exported="false"
+    tools:node="merge">
+    <meta-data
+        android:name="com.cbhard.pulse.core.PulseInitializer"
+        tools:node="remove" />
+</provider>
+```

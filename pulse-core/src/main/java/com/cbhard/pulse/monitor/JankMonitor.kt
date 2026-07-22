@@ -38,6 +38,9 @@ internal class JankMonitor(
     }
 
     override fun doFrame(frameTimeNanos: Long) {
+        // If the kill switch is flipped, break the recursive loop by returning early.
+        if (!PulseSafeguard.isActive) return
+
         if (!isMonitoring) return
         PulseSafeguard.execute("[PulseCore] Jank") {
             if (lastFrameTimeNanos != 0L) {
