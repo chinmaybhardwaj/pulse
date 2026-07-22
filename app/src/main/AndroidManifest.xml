@@ -11,6 +11,10 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.PulseApp">
+        <profileable
+            android:shell="true"
+            tools:targetApi="29" />
+
         <activity
             android:name=".MainActivity"
             android:exported="true"
@@ -23,9 +27,8 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-
-        <activity android:name=".MemoryLeakAndJankTestActivity"/>
-        <activity android:name=".RecompositionTestActivity"/>
+        <activity android:name=".MemoryLeakAndJankTestActivity" />
+        <activity android:name=".RecompositionTestActivity" />
     </application>
 
 </manifest>

@@ -25,3 +25,4 @@ dependencyResolutionManagement {
 rootProject.name = "PulseApp"
 include(":app")
 include(":pulse-core")
+include(":pulse-benchmark")
