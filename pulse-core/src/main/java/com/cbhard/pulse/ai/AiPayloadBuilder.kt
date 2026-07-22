@@ -4,6 +4,7 @@ import android.content.Context
 import android.os.Build
 import android.util.Log
 import com.cbhard.pulse.core.PulseSafeguard
+import com.cbhard.pulse.core.PulseSanitizer
 import com.cbhard.pulse.model.PulseEvent
 import org.json.JSONArray
 import org.json.JSONObject
@@ -28,14 +29,18 @@ internal class AiPayloadBuilder(context: Context) {
 
                     val anomalyObj = JSONObject().apply {
                         put("type", anomaly.type)
-                        put("description", anomaly.description)
+                        //Scrub the anomaly description (e.g., stack traces)
+                        val safeDescription = PulseSanitizer.sanitize(anomaly.description)
+                        put("description", safeDescription)
                         put("timestamp", anomaly.timestamp)
                     }
                     root.put("trigger", anomalyObj)
 
                     val timelineArray = JSONArray()
                     timeline.forEach { event ->
-                        timelineArray.put(JSONObject().apply { put("log", event.toString()) })
+                        //Scrub historical timeline logs
+                        val safeLog = PulseSanitizer.sanitize(event.toString())
+                        timelineArray.put(JSONObject().apply { put("log", safeLog) })
                     }
                     root.put("context_window", timelineArray)
 
