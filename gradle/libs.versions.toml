@@ -11,6 +11,7 @@ composeBom = "2026.06.01"
 startup-runtime = "1.2.0"
 play-services-tflite-java = "16.5.0"
 tensorflow-lite = "2.17.0"
+org-json = "20260719"
 
 [libraries]
 androidx-core-ktx = { group = "androidx.core", name = "core-ktx", version.ref = "coreKtx" }
@@ -32,6 +33,7 @@ androidx-compose-runtime = { group = "androidx.compose.runtime", name = "runtime
 
 play-services-tflite-java = { group = "com.google.android.gms", name = "play-services-tflite-java", version.ref = "play-services-tflite-java" }
 tensorflow-lite = { group = "org.tensorflow", name = "tensorflow-lite", version.ref = "tensorflow-lite" }
+org-json = { group = "org.json", name = "json", version.ref = "org-json" }
 
 [plugins]
 android-application = { id = "com.android.application", version.ref = "agp" }
